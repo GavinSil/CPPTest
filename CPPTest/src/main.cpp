@@ -31,7 +31,7 @@ int main()
      *         shared library and execute.
      * @result passed
      * @other  the first parameter of PF_ADD is indented to be number
-     *         of parameters
+     *         of parameters.
      *
     void *pvHandle = nullptr;
     typedef ULONG (*PF_ADD)(ULONG, ...);
