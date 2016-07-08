@@ -2,9 +2,37 @@
 #include <memory.h>
 #include <dlfcn.h>
 
+#include "boost/bind.hpp"
+#include "boost/thread.hpp"
+
 #include "../inc/def.h"
 
 using namespace std;
+
+boost::mutex mtxOutput, mtxCnt;
+
+void threadTest()
+{
+    ULONG ulCnt = 0;
+    string strTmp;
+
+    while(true)
+    {
+        mtxOutput.lock();
+        cout << "0x" << boost::this_thread::get_id() << ":" << ulCnt << endl;
+        mtxOutput.unlock();
+
+        ulCnt++;;
+        if(ulCnt >= 16)
+        {
+            break;
+        }
+
+        usleep(100);
+    }
+    return;
+}
+
 int main()
 {
     /**
@@ -54,5 +82,17 @@ int main()
 
     dlclose(pvHandle);
     */
+
+    /**
+     * @brief test boost thread
+     *
+    boost::thread *pThreadTest1 = new boost::thread(threadTest);
+    boost::thread *pThreadTest2 = new boost::thread(threadTest);
+
+    while(true)
+    {
+        sleep(1);
+    }
     return 0;
+    */
 }
